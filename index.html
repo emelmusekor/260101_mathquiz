@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>감성 수학 퀴즈 웹앱</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Screen 1: Mood Selection -->
+  <div id="screen-mood" class="glass-card screen active">
+    <h1>오늘의 기분은 어떠신가요?</h1>
+    <p>지금 내 감정과 가장 비슷한 것을 골라보세요.</p>
+    
+    <div id="moods-container" class="btn-grid">
+      <!-- Buttons will be injected here via JavaScript -->
+    </div>
+  </div>
+
+  <!-- Screen 2: Quote & Empathy Message -->
+  <div id="screen-quote" class="glass-card screen">
+    <div style="font-size: 3rem; text-align: center; margin-bottom: 10px;" id="quote-emoji">😊</div>
+    <h2>당신을 위한 편지</h2>
+    <p id="quote-box" class="quote-box">"로딩 중..."</p>
+    <p id="message-box">메시지를 불러오고 있습니다.</p>
+    
+    <button id="btn-start-quiz" class="btn btn-primary">이제 퀴즈 시작하기 🚀</button>
+  </div>
+
+  <!-- Screen 3: Quiz Interface -->
+  <div id="screen-quiz" class="glass-card screen">
+    <p id="difficulty-badge" class="badge">현재 난이도: 중</p>
+    <p id="combo-badge" class="badge combo">연속 정답: 0 / 3</p>
+    <h2 id="quiz-title">로딩 중...</h2>
+    
+    <!-- Multiple Choice -->
+    <div id="options-container" class="options-container"></div>
+    
+    <!-- Short Answer -->
+    <div id="short-answer-container" style="display: none; width: 100%;">
+      <input type="number" id="short-input" placeholder="정답을 숫자로 입력하세요" />
+      <button id="btn-submit-short" class="btn btn-primary" style="margin-top: 10px;">정답 확인</button>
+    </div>
+    
+    <!-- Instant Feedback Panel -->
+    <div id="feedback-box" class="feedback-box" style="display: none;">
+      <!-- Feedback content injected here -->
+    </div>
+  </div>
+
+  <!-- Screen 4: Results -->
+  <div id="screen-result" class="glass-card screen">
+    <h1>연속 3번 성공! 🎉</h1>
+    <p>정말 대단해요! 뛰어난 집중력으로 수학 문제를 모두 맞췄습니다.</p>
+    
+    <div class="result-history">
+      <h3>풀이 내역</h3>
+      <ul id="history-list">
+        <!-- History list injected here -->
+      </ul>
+    </div>
+    
+    <button id="btn-restart" class="btn btn-primary">달라진 기분으로 다시 시작하기 🔄</button>
+  </div>
+
+  <!-- Databases -->
+  <script src="database/moods.js"></script>
+  <script src="database/questions_low.js"></script>
+  <script src="database/questions_mid.js"></script>
+  <script src="database/questions_high.js"></script>
+  <!-- App Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
