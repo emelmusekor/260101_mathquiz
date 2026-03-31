@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>감성 수학 퀴즈 웹앱v1.0</title>
+  <title>감성 수학 퀴즈 웹앱</title>
   <link rel="stylesheet" href="style.css">
+  
+  <!-- 파티클 이펙트 라이브러리 (Confetti) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
@@ -14,7 +17,7 @@
     <p>지금 내 감정과 가장 비슷한 것을 골라보세요.</p>
     
     <div id="moods-container" class="btn-grid">
-      <!-- Buttons will be injected here via JavaScript -->
+      <!-- Buttons injected here -->
     </div>
   </div>
 
@@ -30,8 +33,11 @@
 
   <!-- Screen 3: Quiz Interface -->
   <div id="screen-quiz" class="glass-card screen">
-    <p id="difficulty-badge" class="badge">현재 난이도: 중</p>
-    <p id="combo-badge" class="badge combo">연속 정답: 0 / 3</p>
+    <div class="status-bar">
+      <span id="difficulty-badge" class="badge">Level: 5</span>
+      <span id="combo-badge" class="badge combo">COMBO: 0 / 3</span>
+    </div>
+    
     <h2 id="quiz-title">로딩 중...</h2>
     
     <!-- Multiple Choice -->
@@ -44,15 +50,15 @@
     </div>
     
     <!-- Instant Feedback Panel -->
-    <div id="feedback-box" class="feedback-box" style="display: none;">
-      <!-- Feedback content injected here -->
-    </div>
+    <div id="feedback-box" class="feedback-box" style="display: none;"></div>
   </div>
 
   <!-- Screen 4: Results -->
   <div id="screen-result" class="glass-card screen">
     <h1>연속 3번 성공! 🎉</h1>
-    <p>정말 대단해요! 뛰어난 집중력으로 수학 문제를 모두 맞췄습니다.</p>
+    <div id="empathy-message-box" class="empathy-message">
+      <!-- 3연속 성공 후 공감 메시지 -->
+    </div>
     
     <div class="result-history">
       <h3>풀이 내역</h3>
@@ -66,9 +72,17 @@
 
   <!-- Databases -->
   <script src="database/moods.js"></script>
-  <script src="database/questions_low.js"></script>
-  <script src="database/questions_mid.js"></script>
-  <script src="database/questions_high.js"></script>
+  <script src="database/questions_level_1.js"></script>
+  <script src="database/questions_level_2.js"></script>
+  <script src="database/questions_level_3.js"></script>
+  <script src="database/questions_level_4.js"></script>
+  <script src="database/questions_level_5.js"></script>
+  <script src="database/questions_level_6.js"></script>
+  <script src="database/questions_level_7.js"></script>
+  <script src="database/questions_level_8.js"></script>
+  <script src="database/questions_level_9.js"></script>
+  <script src="database/questions_level_10.js"></script>
+  
   <!-- App Logic -->
   <script src="app.js"></script>
 </body>
