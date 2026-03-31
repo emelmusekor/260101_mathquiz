@@ -9,18 +9,88 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; }
-body { background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end)); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow-y: auto; padding: 20px;}
+body { background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end)); color: var(--text-main); min-height: 100vh; display: flex; overflow-y: auto;}
 
-/* Visual Effects: Error Shake & Red Flash */
+/* Visual Effects */
 body.flash-error { animation: flashRed 0.4s ease; }
 @keyframes flashRed { 0% { background: #450a0a; } 100% { background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end)); } }
-
 .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
 @keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0); } 20%, 80% { transform: translate3d(4px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-8px, 0, 0); } 40%, 60% { transform: translate3d(8px, 0, 0); } }
 
-.glass-card { background: var(--surface); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--surface-border); border-radius: 24px; padding: 40px; width: 100%; max-width: 650px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+/* APP LAYOUT: [Sidebar] + [Main View] */
+#app-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 20px;
+  padding: 20px;
+  align-items: flex-start;
+}
+
+/* Chat Sidebar (Left) */
+#chat-sidebar {
+  flex: 0 0 320px; /* 고정폭 320px */
+  height: calc(100vh - 40px); /* 뷰포트 높이에 맞춤 */
+  position: sticky;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  border-radius: 20px;
+  /* 글래스 모피즘 효과 오버라이딩 */
+  background: rgba(0, 0, 0, 0.2); 
+  border: 1px solid var(--surface-border);
+}
+
+.chat-title { font-size: 1.3rem; text-align: left; margin-bottom: 15px; border-bottom: 1px solid var(--surface-border); padding-bottom: 10px;}
+.chat-nickname-box input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--surface-border); background: var(--surface); color: white; margin-bottom: 15px; outline: none; transition: 0.2s; }
+.chat-nickname-box input:focus { border-color: var(--primary); }
+
+.chat-messages {
+  flex: 1; /* 스크롤 영역 메인 */
+  overflow-y: auto;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 5px;
+}
+.chat-messages::-webkit-scrollbar { width: 6px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 5px; }
+
+.chat-info { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin: 10px 0; }
+.chat-msg { background: rgba(255,255,255,0.08); padding: 12px; border-radius: 12px; font-size: 0.95rem; line-height: 1.4; word-break: break-all; animation: slideUp 0.2s ease;}
+.chat-msg .author { display: block; font-weight: bold; font-size: 0.8rem; color: var(--primary); margin-bottom: 3px; }
+
+.chat-input-box { display: flex; gap: 8px; }
+.chat-input-box input { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid var(--surface-border); background: var(--surface); color: white; outline: none; }
+.chat-input-box input:disabled { opacity: 0.5; cursor: not-allowed; }
+.chat-input-box button { padding: 0 15px; background: var(--primary); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.2s;}
+.chat-input-box button:hover:not(:disabled) { background: var(--primary-hover); }
+.chat-input-box button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Main Quiz Area (Right) */
+#quiz-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 40px);
+}
+
+.glass-card.screen { background: var(--surface); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--surface-border); border-radius: 24px; padding: 40px; width: 100%; max-width: 650px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+/* 모바일 분기 (세로로 스택) */
+@media (max-width: 900px) {
+  #app-container { flex-direction: column; align-items: stretch; }
+  #chat-sidebar { position: static; flex: none; height: 350px; width: 100%; order: 2; /* 퀴즈가 먼저 보이도록 채팅을 뷰 밑으로 */ margin-bottom: 40px;}
+  #quiz-main { min-height: auto; order: 1; }
+}
 
 h1, h2 { font-weight: 700; margin-bottom: 20px; text-align: center; }
+h1.chat-title { text-align: left; }
 h1 { font-size: 2rem; background: linear-gradient(to right, #a855f7, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 p { font-size: 1.1rem; color: var(--text-muted); text-align: center; margin-bottom: 30px; line-height: 1.5; }
 
@@ -37,8 +107,6 @@ p { font-size: 1.1rem; color: var(--text-muted); text-align: center; margin-bott
 .status-bar { display: flex; justify-content: space-between; margin-bottom: 20px; }
 .badge { display: inline-block; background: rgba(255, 255, 255, 0.1); padding: 6px 14px; border-radius: 20px; font-size: 0.95rem; font-weight: bold; color: var(--text-main); border: 1px solid var(--surface-border); }
 .badge.combo { background: rgba(16, 185, 129, 0.1); border-color: var(--correct); color: #34d399; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-
-/* Vissual Effect: Combo Bump */
 .combo-bump { transform: scale(1.3); background: rgba(16, 185, 129, 0.4) !important; box-shadow: 0 0 15px var(--correct); }
 
 /* Options Container */
